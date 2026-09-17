@@ -12,7 +12,7 @@ st.write("Enter the number of hours studied to predict the result.")
 study_hours = st.number_input("Study hours", min_value=0.0, step=0.5)
 
 if st.button("Predict"):
-	input_data = pd.DataFrame({"StudyHours": [study_hours]})
+	input_data = pd.DataFrame({"Study Hours": [study_hours]})
 	prediction = model.predict(input_data)[0]
 	probability = model.predict_proba(input_data)[0][int(prediction)]
 
