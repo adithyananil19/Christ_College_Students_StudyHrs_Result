@@ -7,10 +7,10 @@ model_path = Path(__file__).parent / "student_pass_fail_modelwitha.pkl"
 model = joblib.load(model_path)
 
 st.title("Student Pass Predictor")
-st.write("Enter the number of hours studied.")
+st.write("Enter the study hours and attendance percentage to predict the result.")
 study_hours = st.number_input("Study hours", min_value=0.0, step=0.5)
 
-st.write("Enter the attendance percentage to predict the result.")
+
 attendance = st.number_input("Attendance percentage", min_value=0.0, max_value=100.0, step=1.0)
 
 if st.button("Predict"):
