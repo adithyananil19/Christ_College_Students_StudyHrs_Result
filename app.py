@@ -1,22 +1,44 @@
-import streamlit as st
+import gradio as gr
 import pandas as pd
 import joblib
 from pathlib import Path
 
-model_path = Path(__file__).parent / "student_pass_fail_model.pkl"
+# Load model
+model_path = Path(__file__).parent / "model.pkl"
 model = joblib.load(model_path)
 
-st.title("Student Pass Predictor")
-st.write("Enter the number of hours studied to predict the result.")
 
-study_hours = st.number_input("Study hours", min_value=0.0, step=0.5)
+# Prediction function
+def predict_result(study_hours):
 
-if st.button("Predict"):
-	input_data = pd.DataFrame({"StudyHours": [study_hours]})
-	prediction = model.predict(input_data)[0]
-	probability = model.predict_proba(input_data)[0][int(prediction)]
+    input_data = pd.DataFrame({
+        "StudyHours": [study_hours]
+    })
 
-	if prediction == 1:
-		st.success(f"Predicted result: Pass ({probability:.1%} confidence)")
-	else:
-		st.error(f"Predicted result: Fail ({probability:.1%} confidence)")
+    prediction = model.predict(input_data)[0]
+
+    if prediction == 1:
+        return "Pass"
+    else:
+        return "Fail"
+
+
+# Gradio Interface
+app = gr.Interface(
+    fn=predict_result,
+    inputs=gr.Number(
+        label="Study Hours",
+        value=0
+    ),
+    outputs=gr.Textbox(
+        label="Predicted Result"
+    ),
+    title="Student Pass Predictor",
+    description="Enter the number of hours studied to predict the result."
+)
+
+
+# Start app
+app.launch(
+    server_name="0.0.0.0"
+)
