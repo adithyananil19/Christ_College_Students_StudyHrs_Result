@@ -1,5 +1,4 @@
+gradio
 pandas
-numpy
-scikit_learn
+scikit-learn
 joblib
-streamlit
