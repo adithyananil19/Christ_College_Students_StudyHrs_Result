@@ -23,7 +23,7 @@ st.write(
 # Load trained ANN model
 
 model = tf.keras.models.load_model(
-    "student_ann_model.keras"
+    "employee_ann_model.keras"
 )
 
 
